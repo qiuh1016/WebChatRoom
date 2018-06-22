@@ -1,0 +1,53 @@
+extends layout
+
+block content
+
+  br
+  h1= title
+  br
+
+  form
+    .form-group
+      label(for='') name
+      input.form-control(type='text', aria-describedby='emailHelp', placeholder='Your name', name='name', value='Qiuhong')
+    .form-group
+      label(for='') send content
+      input.form-control(type='text', aria-describedby='emailHelp', placeholder='send content', name='content', value='send content')
+    .form-group
+      label(for='') text
+      p.form-control(type='text', name='text')
+    button#btnLogin.btn.btn-primary(type='button', style='margin-right:5px;') Login
+    button#btnSend.btn.btn-primary(type='button') Send
+
+  script.
+    var socket = io('/');
+    var nameInput = $('input[name=name]');
+    var contentInput = $('input[name=content]');
+    var textInput = $('p[name=text]')
+
+    $('#btnLogin').click(function () {
+      var name = nameInput.val();
+      socket.emit('login', name);
+    })
+
+    $('#btnSend').click(function () {
+      var name = nameInput.val();
+      var content = contentInput.val();
+      socket.emit('msg', content);
+    })
+
+    socket.on('msg', function (data) {
+      addText(data);
+    });
+
+    socket.on('connect', function () {
+      addText('Server connected');
+    });
+
+    socket.on('disconnect', function () {
+      addText('Server disconnected');
+    });
+
+    function addText(data) {
+      textInput.html(textInput.html() == '' ? data : (textInput.html() + '<br>' + data));
+    }

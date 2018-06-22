@@ -1,0 +1,20 @@
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark 
+  //- .fixed-top
+  .container
+    a.navbar-brand(href='/sms/send') RadioStation
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    .collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item(navTag='send')
+          a.nav-link(href='/sms/send') Send
+        li.nav-item(navTag='read')
+          a.nav-link(href='/sms/read') Receive
+
+  script.
+    let navTag = '#{navTag}';
+    $('ul.navbar-nav').find('li.nav-item').each(function() {
+      if ($(this).attr('navTag') == navTag) {
+        $(this).addClass('active');
+      }
+    })
