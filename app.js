@@ -45,3 +45,6 @@ app.on('error', (err, ctx) => {
 });
 
 module.exports = app
+
+require('./test');
+require('./mp4Decode');
